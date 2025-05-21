@@ -26,7 +26,7 @@ func commandExit() error {
 
 func mapsbackwards(conf *config, myCache *cache.Cache) error {
 	//take note this logic may affect later on!
-	if conf.Previous == "" {
+	if conf.Result[0].Name == "canalave-city-area" {
 		return fmt.Errorf("you're on the first page")
 	}
 	conf.Next = conf.Previous
