@@ -5,18 +5,23 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
+
+	cache "github.com/josephus-git/pokedex/pokecache"
 )
 
 func startR() {
 	scanner := bufio.NewScanner(os.Stdin)
 	currentConfig := config{}
 	configptr := &currentConfig
+	const interval = 1 * time.Minute
+	myCache := cache.NewCache(interval)
 
 	for i := 0; ; i++ {
 		fmt.Print("Pokedex > ")
 		scanner.Scan()
 		input := cleanInput(scanner.Text())
-		cmd, ok := getcommands(configptr)[input[0]]
+		cmd, ok := getcommands(configptr, myCache)[input[0]]
 		if !ok {
 			fmt.Print("Unknown command\n")
 			continue
