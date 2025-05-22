@@ -12,8 +12,9 @@ import (
 
 func startR() {
 	scanner := bufio.NewScanner(os.Stdin)
-	currentConfig := config{}
-	configptr := &currentConfig
+	configptr := &config{}
+	pokedexMade := make(map[string]pokeStruct)
+	pokedex := &pokedexMade
 	const interval = 1 * time.Minute
 	myCache := cache.NewCache(interval)
 
@@ -21,7 +22,12 @@ func startR() {
 		fmt.Print("Pokedex > ")
 		scanner.Scan()
 		input := cleanInput(scanner.Text())
-		cmd, ok := getcommands(configptr, myCache)[input[0]]
+		argument2 := ""
+		if len(input) > 1 {
+			argument2 = input[1]
+		}
+
+		cmd, ok := getcommands(configptr, myCache, argument2, pokedex)[input[0]]
 		if !ok {
 			fmt.Print("Unknown command\n")
 			continue
