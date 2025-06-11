@@ -36,6 +36,8 @@ func startR() {
 		if err != nil {
 			fmt.Printf("Error: %v\n", err)
 		}
+		println("___________")
+		println("")
 	}
 }
 
